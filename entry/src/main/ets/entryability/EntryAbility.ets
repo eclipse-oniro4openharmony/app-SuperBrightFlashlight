@@ -6,8 +6,6 @@ import window from '@ohos.window';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
-    let context = this.context;
-    AppStorage.setOrCreate("context", context);
   }
 
   onDestroy(): void {

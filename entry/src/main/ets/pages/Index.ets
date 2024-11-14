@@ -3,7 +3,6 @@ import common from '@ohos.app.ability.common';
 import { BusinessError } from '@ohos.base';
 import UIAbility from '@ohos.app.ability.UIAbility';
 
-const context = AppStorage.get<UIAbility>("context");
 
 // Get camera manager instance
 function getCameraManager(context: common.BaseContext): camera.CameraManager | undefined {
@@ -67,10 +66,10 @@ function setTorchMode(cameraManager: camera.CameraManager, torchMode: camera.Tor
 @Component
 struct Index {
   //Initialize cameraManager
-  private cameraManager: camera.CameraManager = getCameraManager(getContext(this))
+  private cameraManager: camera.CameraManager = getCameraManager(getContext(this)) as camera.CameraManager
   //Camera torch mode instance
-  private torchMode: camera.TorchMode = getTorchMode(this.cameraManager)
-  private torchInfo: camera.TorchStatusInfo
+  private torchMode: camera.TorchMode = getTorchMode(this.cameraManager) as camera.TorchMode
+  private torchInfo: camera.TorchStatusInfo | null = null
   @State torchAvailability: boolean = false
   @State torchActive: boolean = false
   @State torchLevel: number = 0
