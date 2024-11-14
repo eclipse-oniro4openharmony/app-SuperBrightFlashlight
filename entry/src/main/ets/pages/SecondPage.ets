@@ -20,7 +20,7 @@ struct SecondPage {
         step: 20,
         style: SliderStyle.InSet,
         direction: Axis.Vertical,
-        reverse: true
+        reverse: true,
       })
         .showSteps(true)
         .onChange((value: number, mode: SliderChangeMode) => {
@@ -38,12 +38,25 @@ struct SecondPage {
           x: '80%',
           y: '10%'
         })
-        .trackThickness(40)
+        .stepSize(20)
+        .stepColor('#bc646363')
+        .trackThickness(50)
+        .trackBorderRadius(10)
+        .trackColor('#2d436475')
+        .selectedColor('#ffffffff')
+        .blockColor('#ff981e1e')
+        .blockStyle({
+          type: SliderBlockType.SHAPE,
+          shape: new Rect({
+            width: 50,
+            height: 50,
+          })
+        })
     }
     .alignItems(HorizontalAlign.End)
     .height('100%')
+    .backgroundColor(this.isOn ? Color.Orange : Color.Gray)
     .width('100%')
-    .backgroundColor(Color.Gray)
     .backgroundImage(this.isOn == false ? $r('app.media.light_off') : $r('app.media.light_on'))
     .backgroundImageSize(ImageSize.Contain)
     .backgroundImagePosition(Alignment.Center)

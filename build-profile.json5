@@ -5,11 +5,24 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "compileSdkVersion": 11,
-        "compatibleSdkVersion": 11,
-        "runtimeOS": "OpenHarmony",
+        "compatibleSdkVersion": "4.1.0(11)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+          }
+        }
       }
     ],
+    //    "products": [
+    //      {
+    //        "name": "default",
+    //        "signingConfig": "default",
+    //        "compileSdkVersion": 11,
+    //        "compatibleSdkVersion": 11,
+    //        "runtimeOS": "OpenHarmony",
+    //      }
+    //    ],
     "buildModeSet": [
       {
         "name": "debug",
