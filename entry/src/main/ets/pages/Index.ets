@@ -46,7 +46,6 @@ function getTorchMode(cameraManager: camera.CameraManager): camera.TorchMode | u
   let torchMode: camera.TorchMode | undefined = undefined;
   torchMode = cameraManager.getTorchMode();
   return torchMode;
-
 }
 
 //设置设备手电筒模式
