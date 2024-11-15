@@ -29,6 +29,24 @@ struct SecondPage {
 
   build() {
     Stack() {
+
+      if (this.lightLevel == 20) {
+        Image($r('app.media.lv1'))
+          .imageStyle()
+      } else if (this.lightLevel == 40) {
+        Image($r('app.media.lv2'))
+          .imageStyle()
+      } else if (this.lightLevel == 60) {
+        Image($r('app.media.lv3'))
+          .imageStyle()
+      } else if (this.lightLevel == 80) {
+        Image($r('app.media.lv4'))
+          .imageStyle()
+      } else if (this.lightLevel == 100) {
+        Image($r('app.media.lv5'))
+          .imageStyle()
+      }
+
       Slider({
         value: this.lightLevel,
         step: 20,
@@ -109,11 +127,27 @@ struct SecondPage {
     }
     //.alignItems(HorizontalAlign.End)
     .height('100%')
-    .backgroundColor(this.isOn ? '#d2ddcccc' : '#97050505')
+    .backgroundColor(!this.isOn ? '#97050505' :
+      (this.lightLevel == 20 ? '#d2b8a7a7' :
+        (
+          this.lightLevel == 40 ? '#d2ddcccc' :
+            (
+              this.lightLevel == 60 ? '#bed2d0d0' :
+                (
+                  this.lightLevel == 80 ? '#d5faf4f4' : '#ffffffff'
+                )
+            )
+        )
+      )
+    )
     .width('100%')
     .backgroundImage(this.isOn == false ? $r('app.media.light_off') : $r('app.media.light_on'))
-    .backgroundImageSize(ImageSize.Contain)
-    .backgroundImagePosition(Alignment.Center)
+    .backgroundImageSize(2)
+    .backgroundImagePosition({
+      x: '26%',
+      y: '67%'
+    })
+    .alignContent(Alignment.Top)
 
     // Row() {
     //   Toggle({
@@ -163,4 +197,13 @@ function dividerStyle(length?: Length) {
   })
   .color('#6b6b6b')
   .width('13.9%')
+}
+
+@Extend(Image)
+function imageStyle() {
+  .width('90%')
+  .height('70%')
+  .margin({
+    left: '5%'
+  })
 }
