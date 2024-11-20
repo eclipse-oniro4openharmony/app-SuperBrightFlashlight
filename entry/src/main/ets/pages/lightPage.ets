@@ -9,7 +9,6 @@ struct lightPage {
   private cameraManager: camera.CameraManager = getCameraManager(getContext(this)) as camera.CameraManager
   private torchMode: camera.TorchMode = getTorchMode(this.cameraManager) as camera.TorchMode
 
-
   @Builder
   DividerComponent() {
     Column() {
@@ -96,13 +95,6 @@ struct lightPage {
         .trackColor('#2d1b2124')
         .selectedColor('#ffffffff')
         .blockColor('#79e7dede')
-        //.showTips(true, this.tipsValue.toString())// .blockStyle({
-          //   type: SliderBlockType.SHAPE,
-          //   shape: new Rect({
-          //     width: 50,
-          //     height: 50,
-          //   })
-          // })
         .zIndex(1)
       //this.DividerComponent()
       if (this.isOn == true) {
@@ -147,29 +139,6 @@ struct lightPage {
       y: '80%'
     })
     .alignContent(Alignment.Top)
-
-    // Row() {
-    //   Toggle({
-    //     type: ToggleType.Switch,
-    //     isOn: false
-    //   })//todo: link isOn with local variable
-    //     //todo: implement the concrete login after board testing
-    //     .onChange((isOn: boolean) => {
-    //       if (isOn) {
-    //         console.info('flash is on')
-    //       }
-    //       else {
-    //         console.info('flash is off')
-    //       }
-    //     })
-    //     .size({
-    //       width:120,
-    //       height:40
-    //     })
-    // }
-    // .margin({
-    //   top: '15%'
-    // })
   }
 }
 
