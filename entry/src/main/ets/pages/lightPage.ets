@@ -1,11 +1,14 @@
-import { Size } from '@ohos/hypium'
-
+import { getCameraManager, isTorchSupported, isTorchModeSupported, getTorchMode, setTorchMode } from '../Utils/flashUtils'
+import camera from '@ohos.multimedia.camera';
+import { BusinessError } from '@ohos.base';
 @Entry
 @Component
-struct SecondPage {
+struct lightPage {
   @State lightLevel: number = 0
   @State isOn: boolean = false
-  @State tipsValue: string = ''
+  private cameraManager: camera.CameraManager = getCameraManager(getContext(this)) as camera.CameraManager
+  private torchMode: camera.TorchMode = getTorchMode(this.cameraManager) as camera.TorchMode
+
 
   @Builder
   DividerComponent() {
@@ -30,59 +33,53 @@ struct SecondPage {
   build() {
     Stack() {
 
-      if (this.lightLevel == 20) {
+      if (this.lightLevel <= 20 && this.lightLevel > 0) {
         Image($r('app.media.lv1'))
           .imageStyle()
-      } else if (this.lightLevel == 40) {
+      } else if (this.lightLevel <= 40 && this.lightLevel > 20) {
         Image($r('app.media.lv2'))
           .imageStyle()
-      } else if (this.lightLevel == 60) {
+      } else if (this.lightLevel <= 60 && this.lightLevel > 40) {
         Image($r('app.media.lv3'))
           .imageStyle()
-      } else if (this.lightLevel == 80) {
+      } else if (this.lightLevel <= 80 && this.lightLevel > 60) {
         Image($r('app.media.lv4'))
           .imageStyle()
-      } else if (this.lightLevel == 100) {
+      } else if (this.lightLevel <= 100 && this.lightLevel > 80) {
         Image($r('app.media.lv5'))
           .imageStyle()
       }
 
       Slider({
         value: this.lightLevel,
-        step: 20,
+        // step: 20,
         style: SliderStyle.InSet,
         direction: Axis.Vertical,
         reverse: true,
       })
-        .showSteps(true)
+        .showSteps(false)
         .onChange((value: number, mode: SliderChangeMode) => {
           this.lightLevel = value
+          //console.info('value:' + value + 'mode:' + mode.toString())
           if (value == 0) {
             this.isOn = false
+            setTorchMode(this.cameraManager, camera.TorchMode.OFF)
           } else {
+            if (isTorchSupported(this.cameraManager)) {
+              console.info('flashLight can be used!')
+            }
+            else {
+              console.info('current device not support flashLight!')
+            }
+            if (isTorchModeSupported(this.cameraManager, this.torchMode)) {
+              console.info('torch mode can be used!')
+
+              setTorchMode(this.cameraManager, camera.TorchMode.ON)
+            }
+            else {
+              console.info('current device not support torch mode!')
+            }
             this.isOn = true
-          }
-          switch (value) {
-            case 0:
-              this.tipsValue = 'lv. 0'
-              break;
-            case 20:
-              this.tipsValue = 'lv. 1'
-              break;
-            case 40:
-              this.tipsValue = 'lv. 2'
-              break;
-            case 60:
-              this.tipsValue = 'lv. 3'
-              break;
-            case 80:
-              this.tipsValue = 'lv. 4'
-              break;
-            case 100:
-              this.tipsValue = 'lv. 5'
-              break;
-            default:
-              break;
           }
         })
         .height('80%')
@@ -99,7 +96,7 @@ struct SecondPage {
         .trackColor('#2d1b2124')
         .selectedColor('#ffffffff')
         .blockColor('#79e7dede')
-        .showTips(true, this.tipsValue.toString())// .blockStyle({
+        //.showTips(true, this.tipsValue.toString())// .blockStyle({
           //   type: SliderBlockType.SHAPE,
           //   shape: new Rect({
           //     width: 50,
@@ -127,14 +124,14 @@ struct SecondPage {
     }
     //.alignItems(HorizontalAlign.End)
     .height('100%')
-    .backgroundColor(!this.isOn ? '#97050505' :
-      (this.lightLevel == 20 ? '#d2b8a7a7' :
+    .backgroundColor(!this.isOn ? '#ff4e4a4a' :
+      (this.lightLevel >= 20 && this.lightLevel < 40 ? '#d2b8a7a7' :
         (
-          this.lightLevel == 40 ? '#d2ddcccc' :
+          this.lightLevel >= 40 && this.lightLevel < 60 ? '#d2ddcccc' :
             (
-              this.lightLevel == 60 ? '#bed2d0d0' :
+              this.lightLevel >= 60 && this.lightLevel < 80 ? '#bed2d0d0' :
                 (
-                  this.lightLevel == 80 ? '#d5faf4f4' : '#ffffffff'
+                  this.lightLevel >= 80 && this.lightLevel <= 100 ? '#d5faf4f4' : '#97050505'
                 )
             )
         )
@@ -142,10 +139,12 @@ struct SecondPage {
     )
     .width('100%')
     .backgroundImage(this.isOn == false ? $r('app.media.light_off') : $r('app.media.light_on'))
-    .backgroundImageSize(2)
+    .backgroundImageSize({
+      width:50,
+    })
     .backgroundImagePosition({
-      x: '26%',
-      y: '67%'
+      x: '43%',
+      y: '80%'
     })
     .alignContent(Alignment.Top)
 

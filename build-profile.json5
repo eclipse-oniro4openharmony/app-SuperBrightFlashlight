@@ -1,16 +1,16 @@
 {
   "app": {
-    "signingConfigs": [],
-    "products": [
+    "signingConfigs": [
       {
         "name": "default",
-        "signingConfig": "default",
-        "compatibleSdkVersion": "4.1.0(11)",
-        "runtimeOS": "HarmonyOS",
-        "buildOption": {
-          "strictMode": {
-            "caseSensitiveCheck": true,
-          }
+        "material": {
+          "certpath": "C:/Users/c84381641/.ohos/config/openharmony/default_SuperBrightFlashlight_MRtPgYgoVi3tGHEpgr8dZpe0bBFDtkJAqx59OHT5Fc8=.cer",
+          "storePassword": "0000001B9DA13162C052EA9B42969EED262985209D43C574E63F16C6C75D06999F812AED40A31CC918CCA7",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B7A38FC7AEB2222A19C904819CDC7EE60E6CE3A6B9A4E2A0EE557468AE4299FA2151CA248F380C9",
+          "profile": "C:/Users/c84381641/.ohos/config/openharmony/default_SuperBrightFlashlight_MRtPgYgoVi3tGHEpgr8dZpe0bBFDtkJAqx59OHT5Fc8=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:/Users/c84381641/.ohos/config/openharmony/default_SuperBrightFlashlight_MRtPgYgoVi3tGHEpgr8dZpe0bBFDtkJAqx59OHT5Fc8=.p12"
         }
       }
     ],
@@ -18,11 +18,24 @@
     //      {
     //        "name": "default",
     //        "signingConfig": "default",
-    //        "compileSdkVersion": 11,
-    //        "compatibleSdkVersion": 11,
-    //        "runtimeOS": "OpenHarmony",
+    //        "compatibleSdkVersion": "4.1.0(11)",
+    //        "runtimeOS": "HarmonyOS",
+    //        "buildOption": {
+    //          "strictMode": {
+    //            "caseSensitiveCheck": true,
+    //          }
+    //        }
     //      }
     //    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compileSdkVersion": 11,
+        "compatibleSdkVersion": 11,
+        "runtimeOS": "OpenHarmony",
+      }
+    ],
     "buildModeSet": [
       {
         "name": "debug",

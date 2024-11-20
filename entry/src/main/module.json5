@@ -8,6 +8,11 @@
       "default",
       "tablet"
     ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.CAMERA",
+      },
+    ],
     "deliveryWithInstall": true,
     "installationFree": false,
     "pages": "$profile:main_pages",
