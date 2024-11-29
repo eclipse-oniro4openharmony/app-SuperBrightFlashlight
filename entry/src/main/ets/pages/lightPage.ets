@@ -1,11 +1,20 @@
-import { getCameraManager, isTorchSupported, isTorchModeSupported, getTorchMode, setTorchMode } from '../Utils/flashUtils'
+import {
+  getCameraManager,
+  isTorchSupported,
+  isTorchModeSupported,
+  getTorchMode,
+  setTorchMode
+} from '../Utils/flashUtils'
 import camera from '@ohos.multimedia.camera';
 import { BusinessError } from '@ohos.base';
+import brightness from '@ohos.brightness';
+
 @Entry
 @Component
 struct lightPage {
-  @State lightLevel: number = 0
-  @State isOn: boolean = false
+  @State lightLevel: number = 40
+  @State isOn: boolean = true
+  @State screenBrightnessValue: number = 0
   private cameraManager: camera.CameraManager = getCameraManager(getContext(this)) as camera.CameraManager
   private torchMode: camera.TorchMode = getTorchMode(this.cameraManager) as camera.TorchMode
 
@@ -27,6 +36,10 @@ struct lightPage {
     .width('100%')
     .height('100%')
     .zIndex(0)
+  }
+
+  aboutToAppear(): void {
+    brightness.setValue(100, false);
   }
 
   build() {
@@ -59,6 +72,8 @@ struct lightPage {
         .showSteps(false)
         .onChange((value: number, mode: SliderChangeMode) => {
           this.lightLevel = value
+          this.screenBrightnessValue = value * 2.55
+          brightness.setValue(this.screenBrightnessValue, false);
           //console.info('value:' + value + 'mode:' + mode.toString())
           if (value == 0) {
             this.isOn = false
@@ -104,8 +119,10 @@ struct lightPage {
             y: '83%'
           })
           .onClick(() => {
+            setTorchMode(this.cameraManager, camera.TorchMode.OFF)
             this.lightLevel = 0
             this.isOn = false
+            brightness.setValue(0, false);
           })
           .buttonStyle(ButtonStyleMode.NORMAL)
           .type(ButtonType.Normal)
@@ -132,7 +149,7 @@ struct lightPage {
     .width('100%')
     .backgroundImage(this.isOn == false ? $r('app.media.light_off') : $r('app.media.light_on'))
     .backgroundImageSize({
-      width:50,
+      width: 50,
     })
     .backgroundImagePosition({
       x: '43%',
