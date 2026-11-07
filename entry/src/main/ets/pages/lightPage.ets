@@ -7,7 +7,7 @@ import {
 } from '../Utils/flashUtils'
 import camera from '@ohos.multimedia.camera';
 import { BusinessError } from '@ohos.base';
-import brightness from '@ohos.brightness';
+import window from '@ohos.window';
 
 @Entry
 @Component
@@ -39,7 +39,17 @@ struct lightPage {
   }
 
   aboutToAppear(): void {
-    brightness.setValue(100, false);
+    this.setScreenBrightness(100);
+  }
+
+  // value is 0-255. @ohos.brightness is a system API, so this sets the
+  // brightness of the app's window, which applies while it is in front.
+  private setScreenBrightness(value: number): void {
+    window.getLastWindow(getContext(this))
+      .then((win: window.Window) => win.setWindowBrightness(value / 255))
+      .catch((err: BusinessError) => {
+        console.error(`setWindowBrightness failed: ${err.code} ${err.message}`);
+      });
   }
 
   build() {
@@ -73,7 +83,7 @@ struct lightPage {
         .onChange((value: number, mode: SliderChangeMode) => {
           this.lightLevel = value
           this.screenBrightnessValue = value * 2.55
-          brightness.setValue(this.screenBrightnessValue, false);
+          this.setScreenBrightness(this.screenBrightnessValue);
           //console.info('value:' + value + 'mode:' + mode.toString())
           if (value == 0) {
             this.isOn = false
@@ -122,7 +132,7 @@ struct lightPage {
             setTorchMode(this.cameraManager, camera.TorchMode.OFF)
             this.lightLevel = 0
             this.isOn = false
-            brightness.setValue(0, false);
+            this.setScreenBrightness(0);
           })
           .buttonStyle(ButtonStyleMode.NORMAL)
           .type(ButtonType.Normal)
