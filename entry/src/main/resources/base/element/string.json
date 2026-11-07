@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "Super Flashlight"
+    },
+    {
+      "name": "camera_reason",
+      "value": "The flashlight is the camera's flash"
     }
   ]
 }
