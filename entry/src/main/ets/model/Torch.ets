@@ -16,16 +16,12 @@
  */
 
 import { camera } from '@kit.CameraKit';
-import { BusinessError, deviceInfo } from '@kit.BasicServicesKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 import { common } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
 const DOMAIN = 0x0F1A;
 const TAG = 'Torch';
-
-// CameraManager.isTorchLevelControlSupported / setTorchModeOnWithLevel are
-// API 23, but system-only until API 24; from API 26 any app may call them.
-const TORCH_LEVEL_PUBLIC_API = 26;
 
 export interface TorchState {
   on: boolean;
@@ -43,7 +39,6 @@ export type TorchListener = (state: TorchState) => void;
  */
 export class Torch {
   readonly supported: boolean;
-  readonly levelSupported: boolean;
   private manager: camera.CameraManager | undefined = undefined;
   private listener: TorchListener | undefined = undefined;
   private onStatus = (err: BusinessError, info: camera.TorchStatusInfo): void => {
@@ -56,20 +51,15 @@ export class Torch {
 
   constructor(context: common.Context) {
     let supported = false;
-    let levelSupported = false;
     try {
       this.manager = camera.getCameraManager(context);
       supported = this.manager.isTorchSupported() &&
         this.manager.isTorchModeSupported(camera.TorchMode.ON);
-      if (supported && deviceInfo.sdkApiVersion >= TORCH_LEVEL_PUBLIC_API) {
-        levelSupported = this.manager.isTorchLevelControlSupported();
-      }
     } catch (e) {
       const err = e as BusinessError;
       hilog.error(DOMAIN, TAG, 'camera manager unavailable: %{public}d %{public}s', err.code, err.message);
     }
     this.supported = supported;
-    this.levelSupported = levelSupported;
   }
 
   isOn(): boolean {
@@ -100,20 +90,15 @@ export class Torch {
   }
 
   /*
-   * Switches the torch; level (0..1] is used only where the device supports
-   * level control. Returns false when the service refused, which in practice
-   * means the camera that owns the LED is in use.
+   * Switches the torch. Returns false when the service refused, which in
+   * practice means the camera that owns the LED is in use.
    */
-  set(on: boolean, level: number = 1): boolean {
+  set(on: boolean): boolean {
     if (this.manager === undefined || !this.supported) {
       return false;
     }
     try {
-      if (on && this.levelSupported) {
-        this.manager.setTorchModeOnWithLevel(Math.min(1, Math.max(0.01, level)));
-      } else {
-        this.manager.setTorchMode(on ? camera.TorchMode.ON : camera.TorchMode.OFF);
-      }
+      this.manager.setTorchMode(on ? camera.TorchMode.ON : camera.TorchMode.OFF);
       return true;
     } catch (e) {
       const err = e as BusinessError;

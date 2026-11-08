@@ -6,9 +6,7 @@ A flashlight for OpenHarmony with two lights:
   The torch stays on after the app is closed. The button follows the camera
   service, so it also shows changes made from the Control Center or by
   another app. While an app has the camera that owns the LED open, the torch
-  is unavailable and the app says so. On devices that support torch level
-  control (OpenHarmony 7.0 / API 26 and a camera HAL with levels), a
-  brightness slider appears under the button.
+  is unavailable and the app says so.
 * **Screen**: the display as a soft light, for devices without a flash or
   when the LED is too harsh. Choose its brightness and its colour (white,
   warm white, amber, red for night vision, cool blue). Tap the light to hide
@@ -30,9 +28,12 @@ window brightness are open to every app.
 
 ## Build
 
-Stage model, ArkTS. It compiles against API 26 (OpenHarmony 7.0 SDK) and runs
-on API 12 (OpenHarmony 5.0) and later. Newer APIs are only called after a
-runtime check.
+Stage model, ArkTS. It compiles against API 23 (OpenHarmony 6.1 SDK) and runs
+on API 12 (OpenHarmony 5.0) and later.
+
+The LED has no brightness control: the API for it
+(`setTorchModeOnWithLevel`) is open to apps only from API 26, and the store's
+build toolchain cannot load the API 26 SDK yet.
 
 ```
 ohpm install

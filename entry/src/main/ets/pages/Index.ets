@@ -30,7 +30,6 @@ const MODE_SCREEN = 1;
 const KEY_MODE = 'mode';
 const KEY_SCREEN_BRIGHTNESS = 'screenBrightness';
 const KEY_COLOR = 'color';
-const KEY_TORCH_LEVEL = 'torchLevel';
 
 const MIN_SCREEN_BRIGHTNESS = 5;
 
@@ -71,7 +70,6 @@ struct Index {
   @State mode: number = MODE_TORCH;
   @State torchOn: boolean = false;
   @State torchAvailable: boolean = true;
-  @State torchLevel: number = 100;
   @State screenBrightness: number = 100;
   @State colorIndex: number = 0;
   @State controlsVisible: boolean = true;
@@ -93,7 +91,6 @@ struct Index {
       this.torchAvailable = state.available;
     });
 
-    this.torchLevel = this.clamp(this.settings.getNumber(KEY_TORCH_LEVEL, 100), 1, 100);
     this.screenBrightness = this.clamp(this.settings.getNumber(KEY_SCREEN_BRIGHTNESS, 100),
       MIN_SCREEN_BRIGHTNESS, 100);
     this.colorIndex = this.clamp(this.settings.getNumber(KEY_COLOR, 0), 0, LIGHT_COLORS.length - 1);
@@ -117,10 +114,6 @@ struct Index {
 
   private torchSupported(): boolean {
     return this.torch !== undefined && this.torch.supported;
-  }
-
-  private levelSupported(): boolean {
-    return this.torch !== undefined && this.torch.levelSupported;
   }
 
   private clamp(v: number, lo: number, hi: number): number {
@@ -185,21 +178,11 @@ struct Index {
       return;
     }
     const target = !this.torchOn;
-    if (this.torch.set(target, this.torchLevel / 100)) {
+    if (this.torch.set(target)) {
       this.torchOn = target;
       this.torchAvailable = true;
     } else {
       this.torchAvailable = false;
-    }
-  }
-
-  private setTorchLevel(level: number, done: boolean): void {
-    this.torchLevel = this.clamp(level, 1, 100);
-    if (this.torchOn) {
-      this.torch?.set(true, this.torchLevel / 100);
-    }
-    if (done) {
-      this.settings?.putNumber(KEY_TORCH_LEVEL, this.torchLevel);
     }
   }
 
@@ -351,15 +334,6 @@ struct Index {
         .fontColor(TEXT)
         .textAlign(TextAlign.Center)
         .id('torch_status')
-
-      if (this.levelSupported()) {
-        BrightnessRow({
-          value: this.torchLevel,
-          min: 1,
-          sliderId: 'torch_level',
-          onValue: (v: number, done: boolean) => this.setTorchLevel(v, done)
-        })
-      }
 
       if (!this.torchSupported()) {
         Button($r('app.string.use_screen'))
