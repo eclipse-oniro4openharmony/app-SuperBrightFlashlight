@@ -2,15 +2,87 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "模块描述"
+      "value": "手电筒和屏幕补光"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "description"
+      "value": "用闪光灯或屏幕照明"
     },
     {
       "name": "EntryAbility_label",
-      "value": "超级手电"
+      "value": "手电筒"
+    },
+    {
+      "name": "mode_torch",
+      "value": "手电筒"
+    },
+    {
+      "name": "mode_screen",
+      "value": "屏幕"
+    },
+    {
+      "name": "torch_on",
+      "value": "已开启"
+    },
+    {
+      "name": "torch_off",
+      "value": "已关闭"
+    },
+    {
+      "name": "torch_busy",
+      "value": "暂不可用"
+    },
+    {
+      "name": "torch_busy_hint",
+      "value": "相机正在使用闪光灯，请关闭相机后重试。"
+    },
+    {
+      "name": "torch_unsupported",
+      "value": "此设备没有闪光灯"
+    },
+    {
+      "name": "use_screen",
+      "value": "使用屏幕补光"
+    },
+    {
+      "name": "hint_hide_controls",
+      "value": "轻触屏幕可隐藏控件"
+    },
+    {
+      "name": "hint_toggle_controls",
+      "value": "屏幕补光，轻触显示或隐藏控件"
+    },
+    {
+      "name": "color_white",
+      "value": "白色"
+    },
+    {
+      "name": "color_warm",
+      "value": "暖白"
+    },
+    {
+      "name": "color_amber",
+      "value": "琥珀色"
+    },
+    {
+      "name": "color_red",
+      "value": "红色"
+    },
+    {
+      "name": "color_blue",
+      "value": "冷蓝"
+    },
+    {
+      "name": "a11y_torch_on",
+      "value": "打开手电筒"
+    },
+    {
+      "name": "a11y_torch_off",
+      "value": "关闭手电筒"
+    },
+    {
+      "name": "a11y_brightness",
+      "value": "亮度"
     }
   ]
 }

@@ -2,15 +2,87 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "module description"
+      "value": "Torch and screen light"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "description"
+      "value": "The camera flash or the screen as a flashlight"
     },
     {
       "name": "EntryAbility_label",
-      "value": "Super Flash"
+      "value": "Flashlight"
+    },
+    {
+      "name": "mode_torch",
+      "value": "Torch"
+    },
+    {
+      "name": "mode_screen",
+      "value": "Screen"
+    },
+    {
+      "name": "torch_on",
+      "value": "On"
+    },
+    {
+      "name": "torch_off",
+      "value": "Off"
+    },
+    {
+      "name": "torch_busy",
+      "value": "Unavailable"
+    },
+    {
+      "name": "torch_busy_hint",
+      "value": "The camera is using the flash. Close it and try again."
+    },
+    {
+      "name": "torch_unsupported",
+      "value": "This device has no flash"
+    },
+    {
+      "name": "use_screen",
+      "value": "Use the screen light"
+    },
+    {
+      "name": "hint_hide_controls",
+      "value": "Tap the light to hide the controls"
+    },
+    {
+      "name": "hint_toggle_controls",
+      "value": "Screen light. Tap to show or hide the controls"
+    },
+    {
+      "name": "color_white",
+      "value": "White"
+    },
+    {
+      "name": "color_warm",
+      "value": "Warm white"
+    },
+    {
+      "name": "color_amber",
+      "value": "Amber"
+    },
+    {
+      "name": "color_red",
+      "value": "Red"
+    },
+    {
+      "name": "color_blue",
+      "value": "Cool blue"
+    },
+    {
+      "name": "a11y_torch_on",
+      "value": "Turn the torch on"
+    },
+    {
+      "name": "a11y_torch_off",
+      "value": "Turn the torch off"
+    },
+    {
+      "name": "a11y_brightness",
+      "value": "Brightness"
     }
   ]
 }
